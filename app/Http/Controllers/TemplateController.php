@@ -64,9 +64,22 @@ class TemplateController extends Controller
         return redirect()->route('templates.index')->with('success', 'Template berhasil diperbarui.');
     }
 
+
     public function destroy($id)
     {
-        Template::destroy($id);
-        return redirect()->route('templates.index')->with('success', 'Template berhasil dihapus.');
+        $template = Template::findOrFail($id);
+
+        // hapus file fisik di storage/app/public/templates
+        if ($template->file && Storage::disk('public')->exists('templates/' . $template->file)) {
+            Storage::disk('public')->delete('templates/' . $template->file);
+        }
+
+        // hapus data di database
+        $template->delete();
+
+        return redirect()
+            ->route('templates.index')
+            ->with('success', 'Template dan file berhasil dihapus.');
     }
+
 }

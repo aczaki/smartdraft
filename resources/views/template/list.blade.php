@@ -79,7 +79,10 @@
                                     <form action="{{ route('templates.destroy', $template->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" onclick="confirmDelete(this)" class="text-red-500 hover:text-red-700 transition-all text-xl" title="Hapus">
+                                        <button type="button" 
+                                                onclick="confirmDelete(this)" 
+                                                class="text-red-500 hover:text-red-700 transition-all text-xl" 
+                                                title="Hapus">
                                             <i class='bx bx-trash-alt'></i>
                                         </button>
                                     </form>
