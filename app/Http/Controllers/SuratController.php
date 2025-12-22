@@ -10,6 +10,7 @@ use PhpOffice\PhpWord\TemplateProcessor;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Session;
 use PhpOffice\PhpWord\IOFactory;
+use Carbon\Carbon;
 
 class SuratController extends Controller
 {
@@ -44,6 +45,7 @@ class SuratController extends Controller
         $tgl_dibuat         = $extract->generateTglDibuat();
         $tglHijriah         = $extract->extractTglHijriah($text)?? '---';
         $jabatan            = $extract->extractJabatan($text)?? '---';
+        $alat               = $extract->extractAlat($text) ?? '---';
 
 
         // Pilih template
@@ -70,7 +72,8 @@ class SuratController extends Controller
             'sekretaris'  => $extract->extractSekretaris($text),
             'penanggung_jawab' => $extract->extractPenanggungJawab($text),
             'tgl_dibuat'  => $extract->generateTglDibuat(),
-            'jabatan'     => $extract->extractJabatan($text)
+            'jabatan'     => $extract->extractJabatan($text),
+            'alat'        => $extract->extractAlat($text),
         ];
         
         foreach ($data as $key => $value) {
@@ -93,7 +96,7 @@ class SuratController extends Controller
             'preview_filename' => $filename
         ]);
 
-        return redirect()->route('surat.preview');
+        return redirect()->route('surat.preview')->with('success', 'Surat berhasil dibuat!');
 
 
     }
@@ -124,62 +127,86 @@ class SuratController extends Controller
         return response()->download($path);
     }
 
-    public function arsip(Request $request)
-    {
-        $request->validate([
-            'nama_surat' => 'required|string',
-            'nomor_surat' => 'required|string',
-            'agenda' => 'nullable|string',
-            'tanggal_dibuat' => 'required|date',
-            'file_path' => 'required|string'
-        ]);
-
-        ArsipSurat::create([
-            'nama_surat' => $request->nama_surat,
-            'nomor_surat' => $request->nomor_surat,
-            'agenda' => $request->agenda,
-            'tanggal_dibuat' => $request->tanggal_dibuat,
-            'file_path' => $request->file_path
-        ]);
-
-        return redirect()->route('surat.preview')
-            ->with('success', 'Surat berhasil diarsipkan');
-    }
-
-    
-    public function inject(Request $request)
-    {
+    // Formulir
+   public function inject(Request $request)
+   {
         $data = $request->validate([
             'nomor' => 'required',
             'jenis_surat' => 'required',
             'penerima' => 'required',
+            'agenda' => 'required',
+            'tanggal'=> 'required',
+            'tglHijriah' => 'required',
+            'tgl_dibuat' => 'required|date',
+            'bidang' => 'required', 
+            'ketua' => 'required',
+            'sekretaris' => 'required',
+            'penanggung_jawab' => 'required',
             'tempat' => 'required',
             'waktu' => 'required',
+            'alat' => 'nullable',
         ]);
 
-       $template = Template::where('keyword', $request->jenis_surat)->first();
 
-    if (!$template) {
-        return back()->withErrors([
-            'jenis_surat' => 'Template tidak ditemukan'
+        $template = Template::where('keyword', $request->jenis_surat)->first();
+
+        $bulan = [
+        '01' => 'Januari', '02' => 'Februari', '03' => 'Maret', '04' => 'April',
+        '05' => 'Mei', '06' => 'Juni', '07' => 'Juli', '08' => 'Agustus',
+        '09' => 'September', '10' => 'Oktober', '11' => 'November', '12' => 'Desember'
+        ];
+
+        $tglParts = explode('-', $request->tgl_dibuat);
+        $tglWithM = $tglParts[2] . ' ' . $bulan[$tglParts[1]] . ' ' . $tglParts[0] . ' M';
+
+        $data['tgl_dibuat'] = $tglWithM;
+
+        if (!$template) {
+            return back()->withErrors(['jenis_surat' => 'Template tidak ditemukan']);
+        }
+
+        $templatepath = public_path($template->path_file);
+        $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor($templatepath);
+
+        $templateProcessor->setValue('tgl_dibuat', $tglWithM);
+
+
+        // Isi template
+        foreach ($request->except('_token', 'jenis_surat') as $key => $value) {
+            $templateProcessor->setValue($key, $value);
+        }
+
+        // Buat nama file unik agar tidak bentrok antar user
+        $filename = 'surat-' . $data['penerima'] . '-' . date('Y-m-d') . '.docx';
+        $directory = public_path('temp_generated');
+        
+        // Pastikan folder ada
+        if (!file_exists($directory)) {
+            mkdir($directory, 0755, true);
+        }
+
+        $path = $directory . '/' . $filename;
+        $templateProcessor->saveAs($path);
+
+        session([
+            'preview_data' => $data,
+            'preview_filename' => $filename
         ]);
+
+        // Kirim data ke session untuk digunakan di halaman preview
+        return redirect()->route('surat.index')->with('success', 'Surat berhasil dibuat!');
     }
 
-    $templatepath = public_path($template->path_file);
-    $templateProcessor = new TemplateProcessor($templatepath);
+    public function prebased()
+    {
+        if (!session()->has('preview_filename')) {
+            return redirect()->route('surat.form');
+        }
 
-    
-    // Isi template dari form
-    foreach ($request->except('_token', 'jenis_surat') as $key => $value) {
-        $templateProcessor->setValue($key, $value);
-    }
-
-    $filename = 'surat-'.$request->jenis_surat.'-'.'.docx';
-    $path = storage_path('app/public/generated/'.$filename);
-
-    $templateProcessor->saveAs($path);
-
-    return response()->download($path)->deleteFileAfterSend(true);
+        return view('surat.prebased', [
+            'data' => session('preview_data'),
+            'filename' => session('preview_filename')
+        ]);
     }
     
 }

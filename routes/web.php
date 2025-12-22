@@ -7,12 +7,8 @@ use App\Http\Controllers\ArsipController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::get('/', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login-form', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -31,6 +27,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/upload-template', [TemplateController::class, 'upload'])->name('uploadTemplate');
     // Kelola Pengguna
     Route::get('/list-user', [UserController::class, 'index'])->name('user.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/user/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.delete');
@@ -62,19 +60,46 @@ Route::middleware(['auth', 'user'])->group(function () {
         ->name('arsip.store');
     Route::get('/list-arsip', [ArsipController::class, 'show'])
         ->name('arsip.index');
+    Route::get('/store-arsip', [ArsipController::class, 'arsipStore'])
+        ->name('arsip.create');
     Route::get('/arsip-surat/{id}/edit', [ArsipController::class, 'edit'])
         ->name('arsip.edit');
     Route::put('/arsip-surat/{id}', [ArsipController::class, 'update'])
         ->name('arsip.update');
     Route::delete('/arsip-surat/{id}', [ArsipController::class, 'destroy'])
         ->name('arsip.destroy');
-    Route::get('/arsip/export', [ArsipController::class, 'export'])
+    Route::get('/arsip/export', [ArsipController::class, 'exportPdf'])
         ->name('arsip.export');
 
-    //based
-    Route::get('/based', fn () => view('surat.based'));
+    //based formulir
+    Route::get('/based', fn () => view('surat.based'))->name('surat.based');
     Route::post('/based/generate', [SuratController::class, 'inject'])
         ->name('surat.inject');
+    Route::get('/based/preview', [SuratController::class, 'prebased'])
+        ->name('surat.index');
+    // Route::get('/surat/preview', function (Illuminate\Http\Request $request) {
+    //     // 1. Ambil nama file dari URL ?file=namafile.docx
+    //     $filename = $request->query('file');
+        
+    //     // 2. Cek apakah file fisik ada di folder temp
+    //     if (!$filename || !file_exists(public_path('temp_generated/' . $filename))) {
+    //         return redirect()->route('surat.based')->with('error', 'File tidak ditemukan.');
+    //     }
+
+    //     // 3. Ambil data pendukung dari session (untuk Modal)
+    //     $dataArsip = session('preview_data');
+
+    //     // 4. Kirim ke view. Kita gunakan compact agar variabel $filename bisa dibaca di Blade
+    //     return view('surat.prebased', compact('filename', 'dataArsip'));
+    // })->name('surat.prebased');
+
+    Route::get('/get-surat/{filename}', function ($filename) {
+        $path = public_path('temp_generated/' . $filename);
+        if (!file_exists($path)) {
+            abort(404);
+        }
+        return response()->download($path);
+    })->name('surat.download.direct');
     
 });
 

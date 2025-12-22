@@ -15,7 +15,7 @@
                 <div class="relative z-10">
                     <h1 class="text-3xl font-bold text-white mb-2">Selamat Datang di Sistem Surat Digital</h1>
                     <p class="text-red-100 max-w-2xl leading-relaxed">
-                        Platform otomasi manajemen persuratan yang dirancang untuk efisiensi ekstraksi data dan pengarsipan digital berbasis kecerdasan kata kunci.
+                        Platform otomasi manajemen persuratan yang dirancang untuk efisiensi ekstraksi data dan pengarsipan digital berbasis ekstraksi informasi (Regex).
                     </p>
                 </div>
             </div>
@@ -37,15 +37,15 @@
                         <div class="flex gap-4">
                             <div class="text-red-500 mt-1"><i class='bx bxs-zap text-xl'></i></div>
                             <div>
-                                <h4 class="font-bold text-slate-800 text-sm">Otomasi Cerdas</h4>
-                                <p class="text-xs text-slate-500 leading-normal">Mengekstrak informasi penting dari teks mentah menggunakan pendeteksi keyword secara instan.</p>
+                                <h4 class="font-bold text-slate-800 text-sm">Otomasi Sederhana</h4>
+                                <p class="text-xs text-slate-500 leading-normal">Mengekstrak informasi penting dari teks naratif menggunakan Regex secara sederhana.</p>
                             </div>
                         </div>
                         <div class="flex gap-4">
                             <div class="text-red-500 mt-1"><i class='bx bxs-file-doc text-xl'></i></div>
                             <div>
                                 <h4 class="font-bold text-slate-800 text-sm">Format Standar (.docx)</h4>
-                                <p class="text-xs text-slate-500 leading-normal">Menghasilkan dokumen surat resmi dalam format Microsoft Word yang siap digunakan.</p>
+                                <p class="text-xs text-slate-500 leading-normal">Menghasilkan dokumen surat resmi dalam format Microsoft Word.</p>
                             </div>
                         </div>
                     </div>
@@ -58,10 +58,15 @@
                             </div>
                         </div>
                         <div class="flex gap-4">
-                            <div class="text-red-500 mt-1"><i class='bx bxs-lock-shield text-xl'></i></div>
+                            <div class="text-red-500 mt-1">
+                                <i class='bx bxs-file-pdf text-2xl'></i>
+                            </div>
+                            
                             <div>
-                                <h4 class="font-bold text-slate-800 text-sm">Keamanan Data</h4>
-                                <p class="text-xs text-slate-500 leading-normal">Manajemen hak akses pengguna untuk memastikan integritas data persuratan.</p>
+                                <h4 class="font-bold text-slate-800 text-sm">Export Arsip</h4>
+                                <p class="text-xs text-slate-500 leading-normal">
+                                    Menyediakan kemampuan untuk mengekspor dokumen arsip surat ke format PDF.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -81,7 +86,7 @@
                     <p class="text-slate-400 text-xs leading-relaxed mb-6">
                         Pelajari cara menggunakan sistem, manajemen template, hingga tips ekstraksi teks yang optimal.
                     </p>
-                    <a href="/panduan" class="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white text-xs font-bold uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-red-900/40">
+                    <a href="https://drive.google.com/drive/folders/14sUXuRHyarLsnW3zhBS_Cm7jDsedTMyu?usp=sharing" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 bg-red-600 hover:bg-red-700 text-white text-xs font-bold uppercase tracking-widest rounded-xl transition-all shadow-lg shadow-red-900/40">
                         Buka Panduan <i class='bx bx-right-arrow-alt text-lg'></i>
                     </a>
                 </div>

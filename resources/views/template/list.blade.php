@@ -63,9 +63,11 @@
                                 </div>
                             </td>
                             <td class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                <a href="{{ asset($template->path_file) }}" target="_blank" class="text-xs font-bold leading-tight text-slate-400 hover:text-slate-700">
+                                <a href="https://docs.google.com/viewer?url={{ urlencode(asset($template->path_file)) }}&embedded=true" 
+                                target="_blank" 
+                                class="text-xs font-bold leading-tight text-slate-400 hover:text-slate-700 text-center inline-block">
                                     <i class='bx bxs-file-doc text-lg text-blue-500'></i>
-                                    <br>Lihat DOCX
+                                    <br>Lihat di GDocs
                                 </a>
                             </td>
                             <td class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
@@ -77,7 +79,7 @@
                                     <form action="{{ route('templates.destroy', $template->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Yakin ingin menghapus template ini?')" class="text-red-500 hover:text-red-700 transition-all text-xl" title="Hapus">
+                                        <button type="submit" onclick="confirmDelete(this)" class="text-red-500 hover:text-red-700 transition-all text-xl" title="Hapus">
                                             <i class='bx bx-trash-alt'></i>
                                         </button>
                                     </form>

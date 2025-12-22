@@ -56,6 +56,7 @@ class TemplateController extends Controller
     public function update(Request $request, $id)
     {
         $template = Template::findOrFail($id);
+        $template->jenis_surat = $request->jenis_surat;
         $template->keyword = $request->keyword;
         $template->path_file = $request->path_file;
         $template->save();

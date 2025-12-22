@@ -113,34 +113,36 @@
 
                     <div class="space-y-1">
                         <label class="text-xs font-bold text-slate-500 uppercase ml-1">Perihal</label>
-                        <input type="text" name="perihal" value="{{ $data['perihal'] }}" readonly
+                        <input type="text" name="jenis_surat" value="{{ $data['perihal'] }}" readonly
+                               class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 cursor-not-allowed italic">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase ml-1">Nomor Surat</label>
+                        <input type="text" name="nomor_surat" value="{{ $data['nomor'] }}" readonly
                                class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 cursor-not-allowed italic">
                     </div>
                     <div class="space-y-1">
                         <label class="text-xs font-bold text-slate-500 uppercase ml-1">Penerima</label>
-                        <input type="text" name="penerima" value="{{ $data['penerima'] }}" readonly
+                        <input type="text" name="penerima" value="{{ $data['penerima'] }}" 
                                class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 cursor-not-allowed italic">
                     </div>
-
+                    <div class="space-y-1">
+                        <label class="text-xs font-bold text-slate-500 uppercase ml-1">Pembuat</label>
+                        <input type="text" name="pembuat" value="{{ $data['bidang'] }}" 
+                               class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 cursor-not-allowed italic">
+                    </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="space-y-1">
-                            <label class="text-xs font-bold text-slate-500 uppercase ml-1">Nomor Surat</label>
-                            <input type="text" name="nomor_surat" value="{{ $data['nomor'] }}" readonly
-                                   class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 cursor-not-allowed italic">
+                            <label class="text-xs font-bold text-slate-500 uppercase ml-1">Agenda</label>
+                            <input type="text" name="agenda" value="{{ $data['agenda'] }}" readonly
+                            class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 cursor-not-allowed italic">
                         </div>
                         <div class="space-y-1">
-                            <label class="text-xs font-bold text-slate-500 uppercase ml-1">Tanggal</label>
+                            <label class="text-xs font-bold text-slate-500 uppercase ml-1">Tanggal Dibuat</label>
                             <input type="text" name="tanggal_dibuat" value="{{ $data['tgl_dibuat'] }}" readonly
                                    class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 cursor-not-allowed italic">
                         </div>
                     </div>
-
-                    <div class="space-y-1">
-                        <label class="text-xs font-bold text-slate-500 uppercase ml-1">Agenda Acara</label>
-                        <input type="text" name="agenda" value="{{ $data['agenda'] }}" 
-                               class="w-full px-4 py-3 bg-slate-100 border border-slate-200 rounded-xl text-slate-500 cursor-not-allowed italic">
-                    </div>
-
                     <div class="pt-4 flex gap-3">
                         <button type="button" @click="open = false" 
                                 class="flex-1 px-4 py-3 border border-slate-200 text-slate-600 font-bold rounded-xl hover:bg-slate-50 transition-all">

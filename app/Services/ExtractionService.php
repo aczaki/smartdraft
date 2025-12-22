@@ -63,14 +63,16 @@ class ExtractionService
     // =============================
     public function extractTanggal(string $text): ?string
     {
-        // 25 September 2025, 1 Januari 2024, dll.
-        $pattern = '/(\d{1,2}\s(?:Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember)\s\d{4})/i';
+        $pattern = '~pada\s+([A-Za-z\-]+,\s+\d{1,2}(?:-\d{1,2})?\s+(?:Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember)\s+\d{4})~iu';
 
         if (preg_match($pattern, $text, $match)) {
-            return $match[1];
+            return trim($match[1]);
         }
+
         return null;
     }
+
+
 
     // =============================
     // WAKTU
@@ -177,7 +179,7 @@ class ExtractionService
             'keterangan aktif'      => 'keterangan aktif',
             'permohonan pembicara'  => 'permohonan pembicara',
             'permohonan'            => 'permohonan',
-            'izin'                  => 'izin',
+            'peminjaman alat'       => 'peminjaman alat',
             'pemberitahuan'         => 'pemberitahuan',
             'peminjaman tempat'     => 'peminjamantempat'
         ];
@@ -249,6 +251,18 @@ class ExtractionService
 
         return null;
     }
+
+    public function extractAlat(string $text): ?string
+    {
+        $pattern = '/meminjam\s+([^\.]+)\./i';
+
+        if (preg_match($pattern, $text, $match)) {
+            return trim($match[1]);
+        }
+
+        return null;
+    }
+
 
 
 

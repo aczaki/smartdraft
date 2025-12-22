@@ -7,18 +7,19 @@
 <div class="container mx-auto my-8 px-4 sm:px-6 lg:px-8">
     <div class="relative flex flex-col w-full min-w-0 mb-6 break-words bg-white border-0 shadow-soft-xl rounded-2xl bg-clip-border">
         
-        <div class="p-6 pb-0 mb-0 bg-white rounded-t-2xl">
+        <div class="p-6 pb-0 mb-0 bg-red-600 rounded-t-2xl">
             <div class="flex flex-wrap -mx-3">
                 <div class="flex items-center flex-none w-full max-w-full px-3 py-2 sm:w-1/2">
                     <div>
-                        <h3 class="mb-0 text-xl font-bold text-slate-800">Manajemen Pengguna</h3>
-                        <p class="text-sm leading-normal text-slate-500">Kelola akses dan otoritas akun sistem</p>
+                        <h3 class="mb-0 text-xl font-bold text-white">Manajemen Pengguna</h3>
+                        <p class="text-sm leading-normal text-slate-100">Kelola akses dan otoritas akun sistem</p>
                     </div>
                 </div>
                 <div class="flex-none w-full max-w-full px-3 py-2 text-right sm:w-1/2">
-                    <button class="inline-block px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all bg-gradient-to-tl from-slate-800 to-slate-700 rounded-lg cursor-pointer leading-pro text-xs ease-soft-in shadow-soft-md hover:shadow-soft-2xl active:opacity-85">
-                        <i class='bx bx-user-plus mr-1'></i> Tambah Pengguna
-                    </button>
+                    <a href="{{  route('users.create') }}" 
+                       class="inline-block px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all bg-gradient-to-tl from-slate-800 to-slate-700 rounded-lg cursor-pointer leading-pro text-xs ease-soft-in shadow-soft-md hover:shadow-soft-2xl active:opacity-85">
+                        <i class='bx bx-plus mr-1'></i> Tambah Pengguna
+                    </a>
                 </div>
             </div>
         </div>

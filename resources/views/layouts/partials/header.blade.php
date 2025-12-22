@@ -17,10 +17,7 @@
 
             <div class="flex flex-col">
                 <span class="text-gray-900 font-bold text-lg tracking-tight leading-none">
-                    Sistem<span class="text-red-600">Surat</span>
-                </span>
-                <span class="text-[10px] text-gray-400 font-medium tracking-widest uppercase mt-1">
-                    Digital Archive v2.0
+                    Smart<span class="text-red-600">Draft</span>
                 </span>
             </div>
         </div>
@@ -28,9 +25,7 @@
         {{-- RIGHT SIDE (Optional Tambahan: User Profile) --}}
         <div class="flex items-center gap-3">
             <div class="hidden sm:flex flex-col text-right mr-2">
-                <span class="text-xs font-semibold text-gray-700">{{ auth()->user()->name ?? 'Guest' }}</span>
-                <span class="text-[10px] text-green-500 flex items-center justify-end gap-1">
-                    <span class="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></span> Online
+                <span class="text-xs font-semibold text-gray-700">Halo, {{ auth()->user()->name ?? 'Guest' }}</span>
                 </span>
             </div>
             <div class="w-10 h-10 rounded-xl flex items-center justify-center text-red-600 ">

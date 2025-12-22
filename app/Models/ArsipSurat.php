@@ -8,8 +8,9 @@ class ArsipSurat extends Model
 {
     //
     protected $fillable = [
-        'nama_surat',
+        'jenis_surat',
         'nomor_surat',
+        'penerima',
         'agenda',
         'tanggal_dibuat',
         'pembuat',

@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('arsip_surats', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_surat');
+            $table->string('jenis_surat');
             $table->string('nomor_surat');
+            $table->string('penerima');
             $table->string('agenda');
             $table->string('tanggal_dibuat');
             $table->string('pembuat');

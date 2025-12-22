@@ -16,6 +16,10 @@
                     </div>
                 </div>
                 <div class="flex-none w-full max-w-full px-3 py-2 text-right sm:w-1/2">
+                    <a href="{{ route('arsip.create') }}" 
+                       class="inline-block px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all bg-gradient-to-tl from-slate-800 to-slate-700 rounded-lg cursor-pointer leading-pro text-xs ease-soft-in shadow-soft-md hover:shadow-soft-2xl active:opacity-85">
+                        <i class='bx bx-plus mr-1'></i> Tambah Arsip
+                    </a>
                     <a href="{{ route('arsip.export') }}" 
                        class="inline-block px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all bg-gradient-to-tl from-slate-800 to-slate-700 rounded-lg cursor-pointer leading-pro text-xs ease-soft-in shadow-soft-md hover:shadow-soft-2xl active:opacity-85">
                         <i class='bx bxs-file-export mr-1'></i> Export Arsip
@@ -30,7 +34,9 @@
                     <thead class="align-bottom">
                         <tr>
                             <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-slate-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">No</th>
-                            <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-slate-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Informasi Surat</th>
+                            <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-slate-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Jenis Surat</th>
+                            <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-slate-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Nomor Surat</th>
+                            <th class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-slate-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Penerima</th>
                             <th class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-slate-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Agenda</th>
                             <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-slate-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Tanggal Dibuat</th>
                             <th class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-slate-200 shadow-none text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">Aksi</th>
@@ -47,8 +53,21 @@
                             <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                 <div class="flex px-2 py-1">
                                     <div class="flex flex-col justify-center">
-                                        <h6 class="mb-0 text-sm font-bold leading-normal text-slate-800">{{ $item->nama_surat }}</h6>
-                                        <p class="mb-0 text-xs leading-tight text-slate-500 italic">{{ $item->nomor_surat }}</p>
+                                        <h6 class="mb-0 text-sm font-semibold leading-normal text-slate-500">{{ $item->jenis_surat }}</h6>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                <div class="flex px-2 py-1">
+                                    <div class="flex flex-col justify-center">
+                                        <h6 class="mb-0 text-sm font-semibold leading-normal text-slate-500">{{ $item->nomor_surat }}</h6>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="p-2 align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
+                                <div class="flex px-2 py-1">
+                                    <div class="flex flex-col justify-center">
+                                        <h6 class="mb-0 text-sm font-semibold leading-normal text-slate-500">{{ $item->penerima }}</h6>
                                     </div>
                                 </div>
                             </td>
@@ -58,9 +77,9 @@
                                 </span>
                             </td>
                             <td class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
-                                <span class="text-xs font-semibold leading-tight text-slate-400">{{ $item->tanggal_dibuat }}</span>
+                                <span class="text-xs font-semibold leading-tight text-slate-500">{{ $item->tanggal_dibuat }}</span>
                                 <br>
-                                <span class="text-[10px] text-slate-400 uppercase">Oleh: {{ $item->pembuat }}</span>
+                                <span class="text-[10px] text-slate-500 uppercase">Oleh: {{ $item->pembuat }}</span>
                             </td>
                             <td class="p-2 text-center align-middle bg-transparent border-b whitespace-nowrap shadow-transparent">
                                 <div class="flex items-center justify-center gap-3">
@@ -71,8 +90,11 @@
                                     <form action="{{ route('arsip.destroy', $item->id) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" onclick="return confirm('Yakin ingin menghapus?')" class="text-red-500 hover:text-red-700 transition-all text-xl" title="Hapus">
-                                            <i class='bx bx-trash-alt'></i>
+                                        <button type="button" 
+                                                onclick="confirmDelete(this)" 
+                                                class="text-red-600 hover:text-red-900 transition"
+                                                title="Hapus">
+                                            <i class='bx bxs-trash text-lg'></i>
                                         </button>
                                     </form>
                                 </div>
@@ -86,7 +108,7 @@
 
         <div class="flex items-center justify-between p-6 border-t border-slate-100">
             <span class="text-sm font-normal text-slate-500">
-                Menampilkan <span class="font-semibold text-slate-800">1</span> sampai <span class="font-semibold text-slate-800">10</span> dari <span class="font-semibold text-slate-800">100</span> data
+                Menampilkan <span class="font-semibold text-slate-800">1</span> sampai <span class="font-semibold text-slate-800">10</span> dari <span class="font-semibold text-slate-800">{{ $totalArsip ?? 0 }}</span> data
             </span>
             <div class="inline-flex gap-2">
                 <button class="px-4 py-2 text-xs font-semibold border rounded-lg border-slate-200 text-slate-600 hover:bg-slate-50 transition-all disabled:opacity-50">

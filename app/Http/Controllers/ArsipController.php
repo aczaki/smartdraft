@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ArsipSurat;
 use App\Exports\ArsipExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ArsipController extends Controller
 {
@@ -20,22 +21,25 @@ class ArsipController extends Controller
     public function dashboard()
     {
         $totalArsip = ArsipSurat::count();
-        // Jika Anda punya model Template dan User, tambahkan juga:
-        // $totalTemplate = \App\Models\Template::count();
-        // $totalUser = \App\Models\User::count();
 
         return view('dashboard', compact('totalArsip'));
+    }
+
+    public function arsipStore(Request $request)
+    {
+        return view('surat.arsiptambah');
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nama_surat'  => 'required|string',
+            'jenis_surat'  => 'required|string',
             'nomor_surat' => 'required|string',
+            'penerima' => 'required|string',
             'agenda'      => 'required|string',
             'tanggal_dibuat'  => 'required|string',
             'pembuat'     => 'required|string',
-            'file_path' => 'required|string',
+            'file_path' => 'string',
         ]);
         // dd($request->all());
         ArsipSurat::create($request->all());
@@ -47,7 +51,8 @@ class ArsipController extends Controller
     public function show(Request $request)
     {
         $arsip = ArsipSurat::all();
-        return view('surat.arsip', compact('arsip'));
+        $totalArsip = ArsipSurat::count();
+        return view('surat.arsip', compact('arsip', 'totalArsip'));
     }
 
     public function edit($id)
@@ -59,8 +64,12 @@ class ArsipController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_surat' => 'required',
-            'agenda' => 'required'
+            'jenis_surat'  => 'required',
+            'nomor_surat' => 'required',
+            'penerima' => 'required',
+            'agenda'      => 'required',
+            'tanggal_dibuat'  => 'required',
+            'pembuat'     => 'required'
         ]);
 
         $arsip = ArsipSurat::findOrFail($id);
@@ -78,9 +87,18 @@ class ArsipController extends Controller
             ->with('success', 'Arsip berhasil dihapus');
     }
 
-    public function export()
+    public function exportPdf()
     {
-        return Excel::download(new ArsipExport, 'arsip.xlsx');
+        // 1. Ambil data dari database
+        $arsip = ArsipSurat::all();
+
+        // 2. Load view dan masukkan data
+        $pdf = Pdf::loadView('pdf.arsippdf', compact('arsip'));
+
+        // Opsional: Atur ke Landscape jika kolomnya banyak
+        $pdf->setPaper('a4', 'landscape');
+
+        return $pdf->download('laporan-arsip-surat.pdf');
     }
 
 
