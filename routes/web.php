@@ -37,7 +37,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
 Route::middleware(['auth', 'user'])->group(function () {
 
-    //Dashboard User
+    //Dashboard 
     Route::get('/dashboard', [ArsipController::class, 'dashboard'])->name('dashboard');
 
     //Generate surat
@@ -77,21 +77,6 @@ Route::middleware(['auth', 'user'])->group(function () {
         ->name('surat.inject');
     Route::get('/based/preview', [SuratController::class, 'prebased'])
         ->name('surat.index');
-    // Route::get('/surat/preview', function (Illuminate\Http\Request $request) {
-    //     // 1. Ambil nama file dari URL ?file=namafile.docx
-    //     $filename = $request->query('file');
-        
-    //     // 2. Cek apakah file fisik ada di folder temp
-    //     if (!$filename || !file_exists(public_path('temp_generated/' . $filename))) {
-    //         return redirect()->route('surat.based')->with('error', 'File tidak ditemukan.');
-    //     }
-
-    //     // 3. Ambil data pendukung dari session (untuk Modal)
-    //     $dataArsip = session('preview_data');
-
-    //     // 4. Kirim ke view. Kita gunakan compact agar variabel $filename bisa dibaca di Blade
-    //     return view('surat.prebased', compact('filename', 'dataArsip'));
-    // })->name('surat.prebased');
 
     Route::get('/get-surat/{filename}', function ($filename) {
         $path = public_path('temp_generated/' . $filename);
@@ -104,15 +89,4 @@ Route::middleware(['auth', 'user'])->group(function () {
 });
 
 
-
-//Upload template
-
-// Route::post('/templates/upload', [TemplateController::class, 'store']);
-
-
-
-
-// Route::get('/login', function () {
-//     return view('login');
-// });
 

@@ -26,10 +26,6 @@
         <div class="flex items-center gap-3">
             <div class="hidden sm:flex flex-col text-right mr-2">
                 <span class="text-xs font-semibold text-gray-700">Halo, {{ auth()->user()->name ?? 'Guest' }}</span>
-                </span>
-            </div>
-            <div class="w-10 h-10 rounded-xl flex items-center justify-center text-red-600 ">
-                <i class='bx bxs-user-circle text-3xl'></i>
             </div>
         </div>
     </div>
