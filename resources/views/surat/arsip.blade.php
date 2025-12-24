@@ -15,13 +15,13 @@
                         <p class="text-sm leading-normal text-slate-100">Kelola dan pantau arsip digital Anda</p>
                     </div>
                 </div>
-                <div class="flex-none w-full max-w-full px-3 py-2 text-right sm:w-1/2">
+                <div class="flex gap-1 w-full justify-end max-w-full lg:px-3 lg:py-2 text-right mb-2">
                     <a href="{{ route('arsip.create') }}" 
-                       class="inline-block px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all bg-gradient-to-tl from-slate-800 to-slate-700 rounded-lg cursor-pointer leading-pro text-xs ease-soft-in shadow-soft-md hover:shadow-soft-2xl active:opacity-85">
+                       class="inline-block px-3 py-2 font-semibold text-center text-white uppercase transition-all bg-gradient-to-tl from-slate-800 to-slate-700 rounded-lg cursor-pointer text-xs ease-soft-in shadow-soft-md hover:shadow-soft-2xl active:opacity-85">
                         <i class='bx bx-plus mr-1'></i> Tambah Arsip
                     </a>
                     <a href="{{ route('arsip.export') }}" 
-                       class="inline-block px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all bg-gradient-to-tl from-slate-800 to-slate-700 rounded-lg cursor-pointer leading-pro text-xs ease-soft-in shadow-soft-md hover:shadow-soft-2xl active:opacity-85">
+                       class="inline-block px-3 py-2 font-semibold text-center text-white uppercase transition-all bg-gradient-to-tl from-slate-800 to-slate-700 rounded-lg cursor-pointer text-xs ease-soft-in shadow-soft-md hover:shadow-soft-2xl active:opacity-85">
                         <i class='bx bxs-file-export mr-1'></i> Export Arsip
                     </a>
                 </div>
