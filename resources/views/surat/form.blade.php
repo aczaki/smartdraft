@@ -84,21 +84,55 @@
     }
 
     function copyDraft() {
-        const text = document.getElementById('draft-text').innerText;
-        const btn = document.getElementById('btn-copy');
-        const originalHTML = btn.innerHTML;
-        
-        navigator.clipboard.writeText(text).then(() => {
-            // Feedback Visual Ganti Teks & Ikon
-            btn.innerHTML = "<i class='bx bx-check'></i> TERSALIN!";
-            btn.classList.replace('text-red-500', 'text-green-600');
-            
-            // Kembalikan ke asal setelah 2 detik
-            setTimeout(() => {
-                btn.innerHTML = originalHTML;
-                btn.classList.replace('text-green-600', 'text-red-500');
-            }, 2000);
+    const text = document.getElementById('draft-text').innerText;
+    const btn = document.getElementById('btn-copy');
+    const originalHTML = btn.innerHTML;
+
+    // Fungsi untuk mengubah UI saat sukses
+    const showSuccess = () => {
+        btn.innerHTML = "<i class='bx bx-check'></i> TERSALIN!";
+        btn.classList.replace('text-red-500', 'text-green-600');
+        setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.classList.replace('text-green-600', 'text-red-500');
+        }, 2000);
+    };
+
+    // Metode 1: Clipboard API (Modern & HTTPS)
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(showSuccess).catch(err => {
+            fallbackCopyTextToClipboard(text, showSuccess);
         });
+    } else {
+        // Metode 2: Fallback (Untuk Mobile/HTTP)
+        fallbackCopyTextToClipboard(text, showSuccess);
+    }
+}
+
+// Fungsi Fallback menggunakan TextArea tersembunyi
+    function fallbackCopyTextToClipboard(text, callback) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        
+        // Pastikan textarea tidak terlihat dan tidak merusak scroll
+        textArea.style.top = "0";
+        textArea.style.left = "0";
+        textArea.style.position = "fixed";
+        textArea.style.opacity = "0";
+
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        textArea.setSelectionRange(0, 99999); // Untuk iOS
+
+        try {
+            const successful = document.execCommand('copy');
+            if (successful) callback();
+        } catch (err) {
+            console.error('Gagal menyalin teks', err);
+        }
+
+        document.body.removeChild(textArea);
     }
 </script>
 

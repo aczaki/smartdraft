@@ -15,11 +15,8 @@
 <div class="min-h-screen bg-gradient-to-br from-red-200 via-white to-amber-100 flex flex-col justify-center px-4 py-12 sm:px-6 lg:px-8">
     
     <div class="sm:mx-auto sm:w-full sm:max-w-md transition-all duration-500">
-        <!-- <div class="flex justify-center text-red-600 mb-2">
-            <i class='bx bxs-lock-alt text-5xl'></i>
-        </div> -->
-        <h2 class="text-center text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
-            Selamat Datang Kembali
+        <h2 class="text-center text-2xl md:text-3xl font-extrabold text-red-600 tracking-tight">
+            Selamat Datang 
         </h2>
         <p class="mt-2 text-center text-sm text-gray-600">
             Silahkan masuk ke akun Anda
@@ -63,17 +60,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <input id="remember_me" name="remember" type="checkbox" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded cursor-pointer">
-                        <label for="remember_me" class="ml-2 block text-sm text-gray-700 cursor-pointer">Ingat saya</label>
-                    </div>
-                    <div class="text-sm">
-                        <a href="#" class="font-medium text-red-600 hover:text-red-500">Lupa password?</a>
-                    </div>
-                </div> -->
-
                 <div>
                     <button type="submit" 
                         class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-bold rounded-xl text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 shadow-md hover:shadow-lg transition-all duration-300 active:scale-95">
@@ -87,7 +73,7 @@
 
             <div class="mt-8 border-t border-gray-100 pt-6">
                 <div class="text-center text-xs text-gray-400 uppercase tracking-widest">
-                    Project Skripsi &copy; 2025
+                    SmartDraft &copy; 2025
                 </div>
             </div>
 
