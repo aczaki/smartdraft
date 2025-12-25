@@ -38,7 +38,7 @@
                         ['url' => '/based', 'label' => 'Formulir']
                     ],
                 ],
-                ['route' => 'list-template', 'url' => route('templates.index'), 'icon' => 'bx-layer', 'label' => 'Template'],
+                ['route' => 'list-template', 'url' => '/list-template' , 'icon' => 'bx-layer', 'label' => 'Template'],
                 ['route' => 'list-arsip', 'url' => '/list-arsip', 'icon' => 'bx-archive', 'label' => 'Arsip Surat'],
                 ['route' => 'list-user', 'url' => '/list-user', 'icon' => 'bx-user-circle', 'label' => 'Pengguna'],
             ];
